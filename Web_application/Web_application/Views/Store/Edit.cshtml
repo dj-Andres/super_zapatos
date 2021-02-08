@@ -1,0 +1,60 @@
+﻿@using Web_application.Models.ViewModels
+@model DatoStoreViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<form id="formulario">
+    <div class="row">
+        @Html.HiddenFor(d => d.Id, new { id="Id" })
+        <div class="form-group">
+            @Html.LabelFor(d => d.name)
+            @Html.TextBoxFor(d => d.name, new { id = "Name" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(d => d.address)
+            @Html.TextBoxFor(d => d.address, new { id = "Address" })
+        </div>
+        <input type="submit" value="Guardar" />
+    </div>
+</form>
+
+<script>
+
+    const formulario = document.getElementById("formulario");
+    formulario.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const url = "@Url.Content("~/Store/Update")"
+        fetch(url, {
+            method: "POST",
+            body: JSON.stringify({
+                name: document.getElementById("Name").value,
+                address: document.getElementById("Address").value,
+                id:document.getElementById("Id").value
+            }),
+            headers:{
+                "Accept": "application/json",
+                "Content-Type":"application/json"
+            }
+        }).then(function (response) {
+            if (response.ok)
+                return response.text();
+            else
+                alert("Error en el campos");
+        }).then(function (data) {
+            if (data != 1) {
+                alert(data)
+            } else {
+                document.location.href='@Url.Content("~/Store/")'
+            }
+        })
+
+
+    })
+</script>
+
+
+
+

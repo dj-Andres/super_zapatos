@@ -1,0 +1,73 @@
+﻿@model Web_application.Models.ViewModels.DatoArticlesViewModel
+@{
+    ViewBag.Title = "Registro de Articles";
+}
+<h2 class="text-center">@ViewBag.Title</h2>
+<div class="container text-center">
+    <form id="formulario">
+        <div class="form-group row">
+            @Html.LabelFor(d => d.name, htmlAttributes: new { @class = "col-sm-2 col-form-label col-form-label-sm" })
+            @Html.TextBoxFor(d => d.name, htmlAttributes: new { @class = "form-control form-control-sm", id = "Name" })
+        </div>
+        <div class="form-group row">
+            @Html.LabelFor(d => d.descripcion, htmlAttributes: new { @class = "col-sm-2 col-form-label col-form-label-sm" })
+            @Html.TextBoxFor(d => d.descripcion, htmlAttributes: new { @class = "form-control form-control-sm", id = "Descripcion" })
+        </div>
+        <div class="form-group row">
+            @Html.LabelFor(d => d.preci, htmlAttributes: new { @class = "col-sm-2 col-form-label col-form-label-sm" })
+            @Html.TextBoxFor(d => d.preci, htmlAttributes: new { @class = "form-control form-control-sm", id = "Preci" })
+        </div>
+        <div class="form-group row">
+            @Html.LabelFor(d => d.total, htmlAttributes: new { @class = "col-sm-2 col-form-label col-form-label-sm" })
+            @Html.TextBoxFor(d => d.total, htmlAttributes: new { @class = "form-control form-control-sm", id = "Total" })
+
+        </div>
+        <div class="form-group row">
+            @Html.LabelFor(d => d.total_v, htmlAttributes: new { @class = "col-sm-2 col-form-label col-form-label-sm" })
+            @Html.TextBoxFor(d => d.total_v, htmlAttributes: new { @class = "form-control form-control-sm", id = "Total_v" })
+        </div>
+        <div class="form-group row">
+            @Html.LabelFor(d => d.store_id, htmlAttributes: new { @class = "col-sm-2 col-form-label col-form-label-sm" })
+            @Html.TextBoxFor(d => d.store_id, htmlAttributes: new { @class = "form-control form-control-sm", id = "Store" })
+        </div>
+        <div class="form-group row">
+            <input class="btn btn-success btn-lg" type="submit" value="Guardar" />
+        </div>
+    </form>
+</div>
+<script>
+
+    const formulario = document.getElementById("formulario");
+    formulario.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const url = "@Url.Content("~/Articles/Update")"
+        fetch(url, {
+            method: "POST",
+            body: JSON.stringify({
+                name: document.getElementById("Name").value,
+                descripcion: document.getElementById("Descripcion").value,
+                preci: document.getElementById("Preci").value,
+                total: document.getElementById("Total").value,
+                total_v: document.getElementById("Total_v").value,
+                store_id: document.getElementById("Store").value
+            }),
+            headers:{
+                "Accept": "application/json",
+                "Content-Type":"application/json"
+            }
+        }).then(function (response) {
+            if (response.ok)
+                return response.text();
+            else
+                alert("Error en el campos");
+        }).then(function (data) {
+            if (data != 1) {
+                alert(data)
+            } else {
+                document.location.href='@Url.Content("~/Articles/")'
+            }
+        })
+
+
+    })
+</script>

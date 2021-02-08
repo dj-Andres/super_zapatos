@@ -1,0 +1,40 @@
+﻿@using Web_application.Models.ViewModels
+@model List<ArticlesViewModel>
+@{
+    Layout = null;
+}
+<br />
+<div class="table-responsive-md table-responsive-sm pt-3 mt-3">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Codigo</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Total</th>
+                <th scope="col">Total en Bodega</th>
+                <th scope="col">Store</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var oArticles in Model)
+            {
+            <tr>
+                <td>@oArticles.Id</td>
+                <td>@oArticles.name</td>
+                <td>@oArticles.descripcion</td>
+                <td>@oArticles.preci</td>
+                <td>@oArticles.total</td>
+                <td>@oArticles.total_v</td>
+                <td>@oArticles.store_id</td>
+                <td>
+                    <input class="btn btn-warning" onclick="document.location.href = '@Url.Content("~/Articles/Edit/?id="+oArticles.Id)'" type="button" value="Editar" />
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

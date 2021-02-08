@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Gestión de Articles";
+}
+<section>
+    <div class="container-fluid">
+        <div class="card card-success">
+            <div class="card-header">
+                <h3 class="card-title">@ViewBag.Title</h3>
+                <div class="input-group">
+                    <input type="submit" class="btn btn-primary mr-2 p-2" value="Registrar" onclick="document.location.href='@Url.Content("~/Articles/New")'" />
+                    <input type="submit" class="btn btn-success mr-2 p-2" value="Actualizar" onclick="Get()" />
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div id="Lista" class="row d-flex align-items-center">
+
+            </div>
+        </div>
+        <div class="card-footer">
+
+        </div>
+    </div>
+</section>
+<script>
+    
+    urlGet = "@Url.Content("~/Articles/List")";
+    Get();
+    function Get() {
+        fetch(urlGet)
+            .then(function (response) {
+                return response.text();
+            })
+            .then((data) => {
+                document.getElementById("Lista").innerHTML = data;
+            })
+    }
+    
+</script>
+

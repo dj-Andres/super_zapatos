@@ -1,0 +1,37 @@
+﻿@using Web_application.Models.ViewModels
+@model List<StoreViewModel>
+@{
+    Layout = null;
+}
+<br />
+<div class="table-responsive-md table-responsive-sm pt-3 mt-3">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Codigo</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Información</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var oStore in Model)
+            {
+                <tr>
+                    <td>@oStore.Id</td>
+                    <td>@oStore.name</td>
+                    <td>@oStore.address</td>
+                    <td>
+                        <input class="btn btn-warning" onclick="document.location.href = '@Url.Content("~/Store/Edit/?id="+oStore.Id)'" type="button" value="Editar" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+

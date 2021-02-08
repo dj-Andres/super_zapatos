@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SuperModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="article">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="description" Type="String" MaxLength="90" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="price" Type="Int32" />
+    <Property Name="total_in_shelf" Type="Int32" />
+    <Property Name="total_in_vault" Type="Int32" />
+    <Property Name="store_id" Type="Int32" />
+    <NavigationProperty Name="store" Relationship="Self.fk_stores" FromRole="articles" ToRole="stores" />
+  </EntityType>
+  <EntityType Name="store">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="address" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="articles" Relationship="Self.fk_stores" FromRole="stores" ToRole="articles" />
+  </EntityType>
+  <Association Name="fk_stores">
+    <End Role="stores" Type="Self.store" Multiplicity="0..1" />
+    <End Role="articles" Type="Self.article" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="stores">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="articles">
+        <PropertyRef Name="store_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Super_zapatosEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="articles" EntityType="Self.article" />
+    <EntitySet Name="stores" EntityType="Self.store" />
+    <AssociationSet Name="fk_stores" Association="Self.fk_stores">
+      <End Role="stores" EntitySet="stores" />
+      <End Role="articles" EntitySet="articles" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,55 @@
+﻿@model Web_application.Models.ViewModels.DatoStoreViewModel
+@{
+    ViewBag.Title = "Registro de Store";
+}
+<h2 class="text-center">@ViewBag.Title</h2>
+ <div class="container text-center">
+     <form id="formulario">
+         <div class="form-group row">
+             @Html.LabelFor(d => d.name, htmlAttributes: new { @class = "control-label col-md-2" })
+             @Html.TextBoxFor(d => d.name, htmlAttributes: new { @class = "from-control col-md-2", id = "Name" })
+         </div>
+         <div class="form-group row">
+             @Html.LabelFor(d => d.address, htmlAttributes: new { @class = "control-label col-md-2" })
+             @Html.TextBoxFor(d => d.address, htmlAttributes: new { @class = "form-control col-md-2", id = "Address" })
+         </div>
+         
+         <div class="form-group row">
+             <input class="btn btn-success btn-block" type="submit" value="Guardar" />
+         </div>
+     </form>
+ </div>
+<script>
+
+    const formulario = document.getElementById("formulario");
+    formulario.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const url = "@Url.Content("~/Store/Save")"  
+        fetch(url, {
+            method: "POST",
+            body: JSON.stringify({
+                name: document.getElementById("Name").value,
+                address: document.getElementById("Address").value
+            }),
+            headers:{
+                "Accept": "application/json",
+                "Content-Type":"application/json"
+            }
+        }).then(function (response) {
+            if (response.ok)
+                return response.text();
+            else
+                alert("Error en el campos");
+        }).then(function (data) {
+            if (data != 1) {
+                alert(data)
+            } else {
+                document.location.href='@Url.Content("~/Store/")'
+            }
+        })
+
+
+    })
+</script>
+
+
